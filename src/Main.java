@@ -1,6 +1,15 @@
 import java.util.Scanner;
 
-public class Fourth {
+class Node{
+    int value;
+    Node next;
+    Node(int value, Node next){
+        this.value = value;
+        this.next = next;
+    }
+}
+
+public class Main {
     public static Scanner sc;
 
 
@@ -25,9 +34,9 @@ public class Fourth {
         return head;
     }
 
-    public static String toString(Node head, String result){
+    public static String toString(Node head){
         Node ref=head;
-        result="";
+        String result="";
         while(ref.next!=null){
             result=result+ref.value+' ';
             ref=ref.next;
@@ -129,11 +138,13 @@ public class Fourth {
     }
 
     public static String toStringRec(Node head, String result){
-        Node ref=head;
-        if(ref!=null){
-            toStringRec(ref.next, result);
+        if(head.next!=null){
+            result = result + toStringRec(head.next, result);
+            result = head.value + result;
         }
-        result=result+ref.value;
+        else{
+            result = result + head.value;
+        }
         return result;
     }
 
@@ -161,7 +172,7 @@ public class Fourth {
             System.out.println(k + ": " + ref.value);
             ref = ref.next;
         }
-        System.out.println("Метод toString: " + toString(head, null));
+        System.out.println("Метод toString: " + toString(head));
         System.out.print("Введите число элементу метод addFirst(): ");
         head = addFirst(head);
         System.out.println("Результат выполнения addFirst(): ");
@@ -222,13 +233,14 @@ public class Fourth {
             System.out.println(k + ": " + ref.value);
             ref = ref.next;
         }
+        Node headRec = new Node(0,null);
         System.out.print("Введите сколько чисел хотите ввести методом createHeadRec: ");
         int n = sc.nextInt();
         if(n>0) {
-            createHeadRec(head, n, null);
+            createHeadRec(headRec, n, null);
         }
         System.out.println("Результат выполнения createHeadRec(): ");
-        ref = head;
+        ref = headRec;
         k = 0;
         while (ref != null) {
             k++;
@@ -238,16 +250,16 @@ public class Fourth {
         System.out.print("Введите сколько чисел хотите ввести методом createTailRec: ");
         n = sc.nextInt();
         if(n>0) {
-            head = createTailRec(head, n);
+            headRec = createTailRec(headRec, n);
         }
         System.out.println("Результат выполнения createTailRec(): ");
-        ref = head;
+        ref = headRec;
         k = 0;
         while (ref != null) {
             k++;
             System.out.println(k + ": " + ref.value);
             ref = ref.next;
         }
-        System.out.println("Метод toStringRec: " + toString(head, null));
+        System.out.println("Метод toStringRec: " + toStringRec(headRec, ""));
     }
 }
